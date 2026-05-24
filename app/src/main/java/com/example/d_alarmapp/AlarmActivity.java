@@ -1,6 +1,8 @@
 package com.example.d_alarmapp;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configureLockScreenBehavior();
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_alarm);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.alarmRoot), (v, insets) -> {
@@ -33,5 +36,16 @@ public class AlarmActivity extends AppCompatActivity {
         NotificationHelper.showSnoozeNotification(this, alarmTimeMillis);
         Toast.makeText(this, getString(R.string.alarm_snoozed, AlarmHelper.formatTime(alarmTimeMillis)), Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private void configureLockScreenBehavior() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
+        } else {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                    | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }
