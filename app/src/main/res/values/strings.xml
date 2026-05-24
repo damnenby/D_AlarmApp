@@ -2,6 +2,9 @@
     <string name="app_name">D_AlarmApp</string>
     <string name="main_title">Wecker</string>
     <string name="no_alarm_set">Kein Alarm gesetzt</string>
+    <string name="active_alarm">Aktiver Alarm: %1$s Uhr</string>
+    <string name="alarm_set">Alarm gesetzt: %1$s Uhr</string>
+    <string name="alarm_canceled">Alarm abgebrochen</string>
     <string name="set_alarm">Alarm setzen</string>
     <string name="cancel_alarm">Alarm abbrechen</string>
     <string name="settings">Einstellungen</string>

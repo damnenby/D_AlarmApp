@@ -2,6 +2,9 @@ package com.example.d_alarmapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +13,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView activeAlarmTextView;
+    private TimePicker alarmTimePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +28,45 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        activeAlarmTextView = findViewById(R.id.activeAlarmTextView);
+        alarmTimePicker = findViewById(R.id.alarmTimePicker);
+        alarmTimePicker.setIs24HourView(true);
+
+        findViewById(R.id.setAlarmButton).setOnClickListener(v -> setAlarm());
+        findViewById(R.id.cancelAlarmButton).setOnClickListener(v -> cancelAlarm());
         findViewById(R.id.settingsButton).setOnClickListener(v -> openSettings());
+        updateActiveAlarmText();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateActiveAlarmText();
+    }
+
+    private void setAlarm() {
+        long alarmTimeMillis = AlarmHelper.scheduleAlarm(this, alarmTimePicker.getHour(), alarmTimePicker.getMinute());
+        updateActiveAlarmText();
+        Toast.makeText(this, getString(R.string.alarm_set, AlarmHelper.formatTime(alarmTimeMillis)), Toast.LENGTH_SHORT).show();
+    }
+
+    private void cancelAlarm() {
+        AlarmHelper.cancelAlarm(this);
+        updateActiveAlarmText();
+        Toast.makeText(this, R.string.alarm_canceled, Toast.LENGTH_SHORT).show();
     }
 
     private void openSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    private void updateActiveAlarmText() {
+        long activeAlarmTimeMillis = AlarmHelper.getActiveAlarmTime(this);
+        if (activeAlarmTimeMillis == 0L) {
+            activeAlarmTextView.setText(R.string.no_alarm_set);
+        } else {
+            activeAlarmTextView.setText(getString(R.string.active_alarm, AlarmHelper.formatTime(activeAlarmTimeMillis)));
+        }
     }
 }
