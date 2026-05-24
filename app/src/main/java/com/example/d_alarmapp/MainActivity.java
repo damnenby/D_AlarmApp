@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void cancelAlarm() {
         AlarmHelper.cancelAlarm(this);
+        AlarmSoundPlayer.stop();
+        NotificationHelper.cancelSnoozeNotification(this);
         updateActiveAlarmText();
         Toast.makeText(this, R.string.alarm_canceled, Toast.LENGTH_SHORT).show();
     }

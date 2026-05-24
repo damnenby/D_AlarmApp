@@ -45,6 +45,10 @@ public class NotificationHelper {
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build());
     }
 
+    public static void cancelSnoozeNotification(Context context) {
+        NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID);
+    }
+
     private static void createNotificationChannel(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return;
