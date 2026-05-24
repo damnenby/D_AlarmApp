@@ -17,4 +17,7 @@
     <string name="snooze_ten_minutes">10 Minuten</string>
     <string name="snooze_fifteen_minutes">15 Minuten</string>
     <string name="snooze_saved">Snooze-Dauer: %1$d Minuten</string>
+    <string name="snooze_channel_name">Snooze</string>
+    <string name="snooze_notification_title">Alarm verschoben</string>
+    <string name="snooze_notification_text">Neuer Alarm: %1$s Uhr</string>
 </resources>
