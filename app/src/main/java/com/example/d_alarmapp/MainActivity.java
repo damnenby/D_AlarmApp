@@ -1,6 +1,9 @@
 package com.example.d_alarmapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -13,6 +16,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_NOTIFICATIONS = 3001;
 
     private TextView activeAlarmTextView;
     private TimePicker alarmTimePicker;
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.cancelAlarmButton).setOnClickListener(v -> cancelAlarm());
         findViewById(R.id.settingsButton).setOnClickListener(v -> openSettings());
         updateActiveAlarmText();
+        requestNotificationPermission();
     }
 
     @Override
@@ -61,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
     private void openSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATIONS);
+        }
     }
 
     private void updateActiveAlarmText() {
