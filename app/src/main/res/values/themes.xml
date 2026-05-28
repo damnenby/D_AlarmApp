@@ -1,5 +1,7 @@
 <resources>
     <style name="Base.Theme.D_AlarmApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
     </style>
 
     <style name="Theme.D_AlarmApp" parent="Base.Theme.D_AlarmApp" />

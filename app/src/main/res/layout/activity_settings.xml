@@ -5,14 +5,15 @@
     android:id="@+id/settingsRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
     tools:context=".SettingsActivity">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,48 +23,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge" />
 
-        <TextView
-            android:id="@+id/snoozeDurationTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/snooze_duration"
-            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+            android:background="@drawable/bg_settings_group"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <RadioGroup
-            android:id="@+id/snoozeRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/snoozeOneMinuteRadioButton"
+            <TextView
+                android:id="@+id/snoozeDurationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/snooze_one_minute" />
+                android:text="@string/snooze_duration"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
 
-            <RadioButton
-                android:id="@+id/snoozeFiveMinutesRadioButton"
+            <RadioGroup
+                android:id="@+id/snoozeRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/snooze_five_minutes" />
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/snoozeTenMinutesRadioButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/snooze_ten_minutes" />
+                <RadioButton
+                    android:id="@+id/snoozeOneMinuteRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/snooze_one_minute" />
 
-            <RadioButton
-                android:id="@+id/snoozeFifteenMinutesRadioButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/snooze_fifteen_minutes" />
+                <RadioButton
+                    android:id="@+id/snoozeFiveMinutesRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/snooze_five_minutes" />
 
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/snoozeTenMinutesRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/snooze_ten_minutes" />
+
+                <RadioButton
+                    android:id="@+id/snoozeFifteenMinutesRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/snooze_fifteen_minutes" />
+
+            </RadioGroup>
+        </LinearLayout>
 
     </LinearLayout>
 

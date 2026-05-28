@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#5C6BC0</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorAlarmAmber">#F57F17</color>
+    <color name="colorAlarmBackground">#FFF8E1</color>
+    <color name="colorStatusCardFill">#EEF0FB</color>
+    <color name="colorStatusCardStroke">#C5CAE9</color>
+    <color name="colorSettingsCardFill">#F5F5F5</color>
+    <color name="colorSettingsCardStroke">#E0E0E0</color>
 </resources>

@@ -5,7 +5,7 @@
     android:id="@+id/alarmRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:background="@color/colorAlarmBackground"
     tools:context=".AlarmActivity">
 
     <LinearLayout
@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,13 +25,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alarm_ringing"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
+            android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
+            android:textColor="@color/colorAlarmAmber"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/alarm_sub_title"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
         <Button
             android:id="@+id/snoozeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
+            android:minHeight="56dp"
             android:text="@string/snooze" />
 
     </LinearLayout>
