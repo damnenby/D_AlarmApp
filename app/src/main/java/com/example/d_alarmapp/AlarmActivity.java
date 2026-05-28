@@ -30,7 +30,7 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void snoozeAlarm() {
-        AlarmSoundPlayer.stop();
+        AlarmSoundService.stopAlarm(this);
         int snoozeMinutes = PreferenceHelper.getSnoozeMinutes(this);
         long alarmTimeMillis = AlarmHelper.scheduleSnooze(this, snoozeMinutes);
         NotificationHelper.showSnoozeNotification(this, alarmTimeMillis);

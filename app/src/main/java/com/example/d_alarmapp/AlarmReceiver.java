@@ -20,6 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
 
             long alarmTimeMillis = intent.getLongExtra(AlarmHelper.EXTRA_ALARM_TIME_MILLIS, 0L);
+            AlarmSoundService.startAlarm(context, alarmTimeMillis);
             NotificationHelper.showAlarmNotification(context, alarmTimeMillis);
             Intent alarmIntent = new Intent(context, AlarmActivity.class);
             alarmIntent.putExtra(AlarmHelper.EXTRA_ALARM_TIME_MILLIS, alarmTimeMillis);

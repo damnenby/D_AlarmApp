@@ -1,7 +1,7 @@
 package com.example.d_alarmapp;
 
 import android.Manifest;
-import android.app.NotificationManager;
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -54,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
-        requestFullScreenAlarmPermission();
+        if (!canScheduleAlarm()) {
+            return;
+        }
+
         long alarmTimeMillis = AlarmHelper.scheduleAlarm(this, alarmTimePicker.getHour(), alarmTimePicker.getMinute());
         updateActiveAlarmText();
         Toast.makeText(this, getString(R.string.alarm_set, AlarmHelper.formatTime(alarmTimeMillis)), Toast.LENGTH_SHORT).show();
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cancelAlarm() {
         AlarmHelper.cancelAlarm(this);
-        AlarmSoundPlayer.stop();
+        AlarmSoundService.stopAlarm(this);
         NotificationHelper.cancelSnoozeNotification(this);
         updateActiveAlarmText();
         Toast.makeText(this, R.string.alarm_canceled, Toast.LENGTH_SHORT).show();
@@ -80,20 +83,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void requestFullScreenAlarmPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            return;
+    private boolean canScheduleAlarm() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            return true;
         }
 
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        if (notificationManager == null || notificationManager.canUseFullScreenIntent()) {
-            return;
+        AlarmManager alarmManager = getSystemService(AlarmManager.class);
+        if (alarmManager == null || alarmManager.canScheduleExactAlarms()) {
+            return true;
         }
 
-        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+        Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
         intent.setData(Uri.parse("package:" + getPackageName()));
         startActivity(intent);
-        Toast.makeText(this, R.string.full_screen_alarm_permission_needed, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.exact_alarm_permission_needed, Toast.LENGTH_LONG).show();
+        return false;
     }
 
     private void updateActiveAlarmText() {

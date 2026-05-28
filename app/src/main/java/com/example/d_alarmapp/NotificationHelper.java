@@ -1,6 +1,7 @@
 package com.example.d_alarmapp;
 
 import android.Manifest;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,18 +17,22 @@ public class NotificationHelper {
 
     private static final String ALARM_CHANNEL_ID = "alarm_channel";
     private static final String CHANNEL_ID = "snooze_channel";
-    private static final int ALARM_NOTIFICATION_ID = 2000;
+    public static final int ALARM_NOTIFICATION_ID = 2000;
     private static final int NOTIFICATION_ID = 2001;
     private static final int REQUEST_CODE_ALARM_ACTIVITY = 2003;
     private static final int REQUEST_CODE_MAIN = 2002;
 
     public static void showAlarmNotification(Context context, long alarmTimeMillis) {
-        createAlarmNotificationChannel(context);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
                 && context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
+        NotificationManagerCompat.from(context).notify(ALARM_NOTIFICATION_ID, createAlarmNotification(context, alarmTimeMillis));
+    }
+
+    public static Notification createAlarmNotification(Context context, long alarmTimeMillis) {
+        createAlarmNotificationChannel(context);
         Intent intent = new Intent(context, AlarmActivity.class);
         intent.putExtra(AlarmHelper.EXTRA_ALARM_TIME_MILLIS, alarmTimeMillis);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -49,7 +54,7 @@ public class NotificationHelper {
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-        NotificationManagerCompat.from(context).notify(ALARM_NOTIFICATION_ID, builder.build());
+        return builder.build();
     }
 
     public static void showSnoozeNotification(Context context, long alarmTimeMillis) {
@@ -81,6 +86,10 @@ public class NotificationHelper {
 
     public static void cancelSnoozeNotification(Context context) {
         NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID);
+    }
+
+    public static void cancelAlarmNotification(Context context) {
+        NotificationManagerCompat.from(context).cancel(ALARM_NOTIFICATION_ID);
     }
 
     private static void createAlarmNotificationChannel(Context context) {

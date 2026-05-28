@@ -20,7 +20,7 @@
     <string name="alarm_channel_name">Alarm</string>
     <string name="alarm_notification_title">Alarm</string>
     <string name="alarm_notification_text">Alarmzeit: %1$s Uhr</string>
-    <string name="full_screen_alarm_permission_needed">Vollbild-Alarm in den Einstellungen erlauben</string>
+    <string name="exact_alarm_permission_needed">Exakte Alarme in den Einstellungen erlauben</string>
     <string name="snooze_channel_name">Snooze</string>
     <string name="snooze_notification_title">Alarm verschoben</string>
     <string name="snooze_notification_text">Neuer Alarm: %1$s Uhr</string>
