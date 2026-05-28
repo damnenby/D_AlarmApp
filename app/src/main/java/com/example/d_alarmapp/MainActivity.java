@@ -1,10 +1,13 @@
 package com.example.d_alarmapp;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
+        requestFullScreenAlarmPermission();
         long alarmTimeMillis = AlarmHelper.scheduleAlarm(this, alarmTimePicker.getHour(), alarmTimePicker.getMinute());
         updateActiveAlarmText();
         Toast.makeText(this, getString(R.string.alarm_set, AlarmHelper.formatTime(alarmTimeMillis)), Toast.LENGTH_SHORT).show();
@@ -74,6 +78,22 @@ public class MainActivity extends AppCompatActivity {
                 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATIONS);
         }
+    }
+
+    private void requestFullScreenAlarmPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            return;
+        }
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        if (notificationManager == null || notificationManager.canUseFullScreenIntent()) {
+            return;
+        }
+
+        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
+        Toast.makeText(this, R.string.full_screen_alarm_permission_needed, Toast.LENGTH_LONG).show();
     }
 
     private void updateActiveAlarmText() {
